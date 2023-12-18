@@ -1,0 +1,1073 @@
+Running test for file: test/array.s
+== source program ==
+{
+ int[10] arr;
+ int i;
+ i = 0;
+ while i<10  {
+  arr[i] = i;
+  i = i+1;
+ }
+
+ print i;
+}
+== execution result (source) ==
+10
+== translated target program ==
+0 : arr = alloc (10)
+0 : i = 0
+0 : t0 = 0
+0 : i = t0
+1 : SKIP
+0 : t1 = i
+0 : t2 = 10
+0 : t3 = t1 < t2
+0 : iffalse t3 goto 2
+0 : t4 = i
+0 : t5 = i
+0 : arr[t4] = t5
+0 : t6 = i
+0 : t7 = 1
+0 : t8 = t6 + t7
+0 : i = t8
+0 : goto 1
+2 : SKIP
+0 : t9 = i
+0 : write t9
+0 : HALT
+== execution result (translated) ==
+10
+#instructions executed : 142
+== optimized target program ==
+0 : arr = alloc (10)
+0 : i = 0
+0 : i = 0
+1 : t3 = i < 10
+0 : iffalse t3 goto 2
+0 : t4 = i
+0 : t5 = i
+0 : arr[t4] = t5
+0 : t8 = i + 1
+0 : i = t8
+0 : goto 1
+2 : write i
+0 : HALT
+== execution result (optimized) ==
+10
+#instructions executed : 86
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+Running test for file: test/dowhile.s
+== source program ==
+{
+ int sum;
+ int i;
+ int a;
+ i = 0;
+ sum = 0;
+ do  i = i+1; whilei<10;
+ print i;
+}
+== execution result (source) ==
+10
+== translated target program ==
+0 : sum = 0
+0 : i = 0
+0 : a = 0
+0 : t0 = 0
+0 : i = t0
+0 : t1 = 0
+0 : sum = t1
+0 : t8 = i
+0 : t9 = 1
+0 : t10 = t8 + t9
+0 : i = t10
+1 : SKIP
+0 : t2 = i
+0 : t3 = 10
+0 : t4 = t2 < t3
+0 : iffalse t4 goto 2
+0 : t5 = i
+0 : t6 = 1
+0 : t7 = t5 + t6
+0 : i = t7
+0 : goto 1
+2 : SKIP
+0 : t11 = i
+0 : write t11
+0 : HALT
+== execution result (translated) ==
+10
+#instructions executed : 109
+== optimized target program ==
+0 : sum = 0
+0 : i = 0
+0 : a = 0
+0 : i = 0
+0 : sum = 0
+0 : t10 = i + 1
+0 : i = t10
+1 : t4 = i < 10
+0 : iffalse t4 goto 2
+0 : t7 = i + 1
+0 : i = t7
+0 : goto 1
+2 : write i
+0 : HALT
+== execution result (optimized) ==
+10
+#instructions executed : 55
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+Running test for file: test/fact.s
+== source program ==
+{
+ int n;
+ int i;
+ int s;
+ int[10] a;
+ i = 1;
+ s = 1;
+ read n;
+ while i<=n  {
+  s = s*i;
+  i = i+1;
+ }
+
+ print s;
+}
+== execution result (source) ==
+Error: int_of_string
+== translated target program ==
+0 : n = 0
+0 : i = 0
+0 : s = 0
+0 : a = alloc (10)
+0 : t0 = 1
+0 : i = t0
+0 : t1 = 1
+0 : s = t1
+0 : read n
+1 : SKIP
+0 : t2 = i
+0 : t3 = n
+0 : t4 = t2 <= t3
+0 : iffalse t4 goto 2
+0 : t5 = s
+0 : t6 = i
+0 : t7 = t5 * t6
+0 : s = t7
+0 : t8 = i
+0 : t9 = 1
+0 : t10 = t8 + t9
+0 : i = t10
+0 : goto 1
+2 : SKIP
+0 : t11 = s
+0 : write t11
+0 : HALT
+== execution result (translated) ==
+Error: int_of_string
+== optimized target program ==
+0 : n = 0
+0 : i = 0
+0 : s = 0
+0 : a = alloc (10)
+0 : i = 1
+0 : s = 1
+0 : read n
+1 : t2 = i
+0 : t3 = n
+0 : t4 = t2 <= t3
+0 : iffalse t4 goto 2
+0 : t5 = s
+0 : t6 = i
+0 : t7 = t5 * t6
+0 : s = t7
+0 : t10 = i + 1
+0 : i = t10
+0 : goto 1
+2 : write s
+0 : HALT
+== execution result (optimized) ==
+Error: int_of_string
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+Running test for file: test/fib.s
+== source program ==
+{
+ int x;
+ int y;
+ int z;
+ int n;
+ int i;
+ x = 0;
+ y = 1;
+ z = 0;
+ i = 0;
+ read n;
+ while i<n  {
+  y = z+y;
+  z = x;
+  x = y;
+  i = i+1;
+ }
+
+ print y;
+}
+== execution result (source) ==
+Error: int_of_string
+== translated target program ==
+0 : x = 0
+0 : y = 0
+0 : z = 0
+0 : n = 0
+0 : i = 0
+0 : t0 = 0
+0 : x = t0
+0 : t1 = 1
+0 : y = t1
+0 : t2 = 0
+0 : z = t2
+0 : t3 = 0
+0 : i = t3
+0 : read n
+1 : SKIP
+0 : t4 = i
+0 : t5 = n
+0 : t6 = t4 < t5
+0 : iffalse t6 goto 2
+0 : t7 = z
+0 : t8 = y
+0 : t9 = t7 + t8
+0 : y = t9
+0 : t10 = x
+0 : z = t10
+0 : t11 = y
+0 : x = t11
+0 : t12 = i
+0 : t13 = 1
+0 : t14 = t12 + t13
+0 : i = t14
+0 : goto 1
+2 : SKIP
+0 : t15 = y
+0 : write t15
+0 : HALT
+== execution result (translated) ==
+Error: int_of_string
+== optimized target program ==
+0 : x = 0
+0 : y = 0
+0 : z = 0
+0 : n = 0
+0 : i = 0
+0 : x = 0
+0 : y = 1
+0 : z = 0
+0 : i = 0
+0 : read n
+1 : t4 = i
+0 : t5 = n
+0 : t6 = t4 < t5
+0 : iffalse t6 goto 2
+0 : t7 = z
+0 : t8 = y
+0 : t9 = t7 + t8
+0 : y = t9
+0 : t10 = x
+0 : z = t10
+0 : t11 = y
+0 : x = t11
+0 : t14 = i + 1
+0 : i = t14
+0 : goto 1
+2 : write y
+0 : HALT
+== execution result (optimized) ==
+Error: int_of_string
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+Running test for file: test/loop1.s
+== source program ==
+{
+ int x;
+ int y;
+ int n;
+ int z;
+ int i;
+ int[10] fib;
+ x = 0;
+ y = 1;
+ z = 0;
+ i = 0;
+ n = 10;
+ while i<n  {
+  y = z+y;
+  z = x;
+  x = y;
+  fib[i] = y;
+  i = i+1;
+ }
+
+ i = 0;
+ while i<n  {
+  print fib[i];
+  i = i+1;
+ }
+
+}
+== execution result (source) ==
+1
+1
+2
+3
+5
+8
+13
+21
+34
+55
+== translated target program ==
+0 : x = 0
+0 : y = 0
+0 : n = 0
+0 : z = 0
+0 : i = 0
+0 : fib = alloc (10)
+0 : t0 = 0
+0 : x = t0
+0 : t1 = 1
+0 : y = t1
+0 : t2 = 0
+0 : z = t2
+0 : t3 = 0
+0 : i = t3
+0 : t4 = 10
+0 : n = t4
+1 : SKIP
+0 : t5 = i
+0 : t6 = n
+0 : t7 = t5 < t6
+0 : iffalse t7 goto 2
+0 : t8 = z
+0 : t9 = y
+0 : t10 = t8 + t9
+0 : y = t10
+0 : t11 = x
+0 : z = t11
+0 : t12 = y
+0 : x = t12
+0 : t13 = i
+0 : t14 = y
+0 : fib[t13] = t14
+0 : t15 = i
+0 : t16 = 1
+0 : t17 = t15 + t16
+0 : i = t17
+0 : goto 1
+2 : SKIP
+0 : t18 = 0
+0 : i = t18
+3 : SKIP
+0 : t19 = i
+0 : t20 = n
+0 : t21 = t19 < t20
+0 : iffalse t21 goto 4
+0 : t23 = i
+0 : t22 = fib[t23]
+0 : write t22
+0 : t24 = i
+0 : t25 = 1
+0 : t26 = t24 + t25
+0 : i = t26
+0 : goto 3
+4 : SKIP
+0 : HALT
+== execution result (translated) ==
+1
+1
+2
+3
+5
+8
+13
+21
+34
+55
+#instructions executed : 370
+== optimized target program ==
+0 : x = 0
+0 : y = 0
+0 : n = 0
+0 : z = 0
+0 : i = 0
+0 : fib = alloc (10)
+0 : x = 0
+0 : y = 1
+0 : z = 0
+0 : i = 0
+0 : n = 10
+1 : t5 = i
+0 : t6 = n
+0 : t7 = t5 < t6
+0 : iffalse t7 goto 2
+0 : t8 = z
+0 : t9 = y
+0 : t10 = t8 + t9
+0 : y = t10
+0 : t11 = x
+0 : z = t11
+0 : t12 = y
+0 : x = t12
+0 : t13 = i
+0 : t14 = y
+0 : fib[t13] = t14
+0 : t17 = i + 1
+0 : i = t17
+0 : goto 1
+2 : i = 0
+3 : t19 = i
+0 : t20 = n
+0 : t21 = t19 < t20
+0 : iffalse t21 goto 4
+0 : t23 = i
+0 : t22 = fib[t23]
+0 : write t22
+0 : t26 = i + 1
+0 : i = t26
+0 : goto 3
+4 : HALT
+== execution result (optimized) ==
+1
+1
+2
+3
+5
+8
+13
+21
+34
+55
+#instructions executed : 300
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+Running test for file: test/loop2.s
+== source program ==
+{
+ int size;
+ int[100] a;
+ int i;
+ int j;
+ int cnt;
+ i = 0;
+ cnt = 0;
+ while i<10  {
+  j = 0;
+  while j<10    {
+   a[i*10+j] = cnt;
+   j = j+1;
+   cnt = cnt+1;
+  }
+
+  i = i+1;
+ }
+
+ print a[10];
+ print a[20];
+}
+== execution result (source) ==
+10
+20
+== translated target program ==
+0 : size = 0
+0 : a = alloc (100)
+0 : i = 0
+0 : j = 0
+0 : cnt = 0
+0 : t0 = 0
+0 : i = t0
+0 : t1 = 0
+0 : cnt = t1
+3 : SKIP
+0 : t2 = i
+0 : t3 = 10
+0 : t4 = t2 < t3
+0 : iffalse t4 goto 4
+0 : t5 = 0
+0 : j = t5
+1 : SKIP
+0 : t6 = j
+0 : t7 = 10
+0 : t8 = t6 < t7
+0 : iffalse t8 goto 2
+0 : t9 = i
+0 : t10 = 10
+0 : t11 = t9 * t10
+0 : t12 = j
+0 : t13 = t11 + t12
+0 : t14 = cnt
+0 : a[t13] = t14
+0 : t15 = j
+0 : t16 = 1
+0 : t17 = t15 + t16
+0 : j = t17
+0 : t18 = cnt
+0 : t19 = 1
+0 : t20 = t18 + t19
+0 : cnt = t20
+0 : goto 1
+2 : SKIP
+0 : t21 = i
+0 : t22 = 1
+0 : t23 = t21 + t22
+0 : i = t23
+0 : goto 3
+4 : SKIP
+0 : t25 = 10
+0 : t24 = a[t25]
+0 : write t24
+0 : t27 = 20
+0 : t26 = a[t27]
+0 : write t26
+0 : HALT
+== execution result (translated) ==
+10
+20
+#instructions executed : 2301
+== optimized target program ==
+0 : size = 0
+0 : a = alloc (100)
+0 : i = 0
+0 : j = 0
+0 : cnt = 0
+0 : i = 0
+0 : cnt = 0
+3 : t4 = i < 10
+0 : iffalse t4 goto 4
+0 : j = 0
+1 : t8 = j < 10
+0 : iffalse t8 goto 2
+0 : t11 = i * 10
+0 : t13 = t11 + j
+0 : t14 = cnt
+0 : a[t13] = t14
+0 : t17 = j + 1
+0 : j = t17
+0 : t20 = cnt + 1
+0 : cnt = t20
+0 : goto 1
+2 : t23 = i + 1
+0 : i = t23
+0 : goto 3
+4 : t25 = 10
+0 : t24 = a[t25]
+0 : write t24
+0 : t27 = 20
+0 : t26 = a[t27]
+0 : write t26
+0 : HALT
+== execution result (optimized) ==
+10
+20
+#instructions executed : 1195
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+Running test for file: test/t0.s
+== source program ==
+{
+ int x;
+ x = 0;
+ print x+1;
+}
+== execution result (source) ==
+1
+== translated target program ==
+0 : x = 0
+0 : t0 = 0
+0 : x = t0
+0 : t1 = x
+0 : t2 = 1
+0 : t3 = t1 + t2
+0 : write t3
+0 : HALT
+== execution result (translated) ==
+1
+#instructions executed : 7
+== optimized target program ==
+0 : x = 0
+0 : x = 0
+0 : t3 = x + 1
+0 : write t3
+0 : HALT
+== execution result (optimized) ==
+1
+#instructions executed : 4
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+Running test for file: test/t1.s
+== source program ==
+{
+ int x;
+ x = -1;
+ if !x  {
+  print -1;
+ }
+else  {
+  print 2;
+ }
+
+}
+== execution result (source) ==
+2
+== translated target program ==
+0 : x = 0
+0 : t0 = 1
+0 : t1 = -t0
+0 : x = t1
+0 : t2 = x
+0 : t3 = !t2
+0 : if t3 goto 1
+0 : goto 2
+1 : SKIP
+0 : t4 = 1
+0 : t5 = -t4
+0 : write t5
+0 : goto 3
+2 : SKIP
+0 : t6 = 2
+0 : write t6
+0 : goto 3
+3 : SKIP
+0 : HALT
+== execution result (translated) ==
+2
+#instructions executed : 13
+== optimized target program ==
+0 : x = 0
+0 : t0 = 1
+0 : t1 = -t0
+0 : x = t1
+0 : t2 = x
+0 : t3 = !t2
+0 : if t3 goto 1
+0 : goto 2
+1 : t4 = 1
+0 : t5 = -t4
+0 : write t5
+0 : goto 3
+2 : t6 = 2
+0 : write t6
+0 : goto 3
+3 : HALT
+== execution result (optimized) ==
+2
+#instructions executed : 11
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+Running test for file: test/t2.s
+== source program ==
+{
+ int x;
+ int y;
+ x = 0;
+ y = 0;
+ while x<10  {
+  x = x+1;
+  print x;
+ }
+
+}
+== execution result (source) ==
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+== translated target program ==
+0 : x = 0
+0 : y = 0
+0 : t0 = 0
+0 : x = t0
+0 : t1 = 0
+0 : y = t1
+1 : SKIP
+0 : t2 = x
+0 : t3 = 10
+0 : t4 = t2 < t3
+0 : iffalse t4 goto 2
+0 : t5 = x
+0 : t6 = 1
+0 : t7 = t5 + t6
+0 : x = t7
+0 : t8 = x
+0 : write t8
+0 : goto 1
+2 : SKIP
+0 : HALT
+== execution result (translated) ==
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+#instructions executed : 132
+== optimized target program ==
+0 : x = 0
+0 : y = 0
+0 : x = 0
+0 : y = 0
+1 : t4 = x < 10
+0 : iffalse t4 goto 2
+0 : t7 = x + 1
+0 : x = t7
+0 : write x
+0 : goto 1
+2 : HALT
+== execution result (optimized) ==
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+#instructions executed : 66
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+Running test for file: test/t3.s
+== source program ==
+{
+ int sum;
+ int i;
+ i = 0;
+ sum = 0;
+ while i<10  {
+  sum = sum+i;
+  i = i+1;
+ }
+
+ print sum;
+}
+== execution result (source) ==
+45
+== translated target program ==
+0 : sum = 0
+0 : i = 0
+0 : t0 = 0
+0 : i = t0
+0 : t1 = 0
+0 : sum = t1
+1 : SKIP
+0 : t2 = i
+0 : t3 = 10
+0 : t4 = t2 < t3
+0 : iffalse t4 goto 2
+0 : t5 = sum
+0 : t6 = i
+0 : t7 = t5 + t6
+0 : sum = t7
+0 : t8 = i
+0 : t9 = 1
+0 : t10 = t8 + t9
+0 : i = t10
+0 : goto 1
+2 : SKIP
+0 : t11 = sum
+0 : write t11
+0 : HALT
+== execution result (translated) ==
+45
+#instructions executed : 154
+== optimized target program ==
+0 : sum = 0
+0 : i = 0
+0 : i = 0
+0 : sum = 0
+1 : t4 = i < 10
+0 : iffalse t4 goto 2
+0 : t5 = sum
+0 : t6 = i
+0 : t7 = t5 + t6
+0 : sum = t7
+0 : t10 = i + 1
+0 : i = t10
+0 : goto 1
+2 : write sum
+0 : HALT
+== execution result (optimized) ==
+45
+#instructions executed : 97
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+Running test for file: test/t4.s
+== source program ==
+{
+ int x;
+ read x;
+ if x==1||x==2 print x;else print x+1;
+}
+== execution result (source) ==
+Error: int_of_string
+== translated target program ==
+0 : x = 0
+0 : read x
+0 : t0 = x
+0 : t1 = 1
+0 : t2 = t0 == t1
+0 : t3 = x
+0 : t4 = 2
+0 : t5 = t3 == t4
+0 : t6 = t2 || t5
+0 : if t6 goto 1
+0 : goto 2
+1 : SKIP
+0 : t7 = x
+0 : write t7
+0 : goto 3
+2 : SKIP
+0 : t8 = x
+0 : t9 = 1
+0 : t10 = t8 + t9
+0 : write t10
+0 : goto 3
+3 : SKIP
+0 : HALT
+== execution result (translated) ==
+Error: int_of_string
+== optimized target program ==
+0 : x = 0
+0 : read x
+0 : t2 = x == 1
+0 : t5 = x == 2
+0 : t6 = t2 || t5
+0 : if t6 goto 1
+0 : goto 2
+1 : write x
+0 : goto 3
+2 : t10 = x + 1
+0 : write t10
+0 : goto 3
+3 : HALT
+== execution result (optimized) ==
+Error: int_of_string
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+Running test for file: test/t5.s
+== source program ==
+{
+ int x;
+ read x;
+ if x==1||x==2 print x;else print x+1;
+  {
+  int a;
+  int b;
+  a = 1;
+  b = 4;
+  print a+b;
+ }
+
+}
+== execution result (source) ==
+Error: int_of_string
+== translated target program ==
+0 : x = 0
+0 : read x
+0 : t0 = x
+0 : t1 = 1
+0 : t2 = t0 == t1
+0 : t3 = x
+0 : t4 = 2
+0 : t5 = t3 == t4
+0 : t6 = t2 || t5
+0 : if t6 goto 1
+0 : goto 2
+1 : SKIP
+0 : t7 = x
+0 : write t7
+0 : goto 3
+2 : SKIP
+0 : t8 = x
+0 : t9 = 1
+0 : t10 = t8 + t9
+0 : write t10
+0 : goto 3
+3 : SKIP
+0 : a = 0
+0 : b = 0
+0 : t11 = 1
+0 : a = t11
+0 : t12 = 4
+0 : b = t12
+0 : t13 = a
+0 : t14 = b
+0 : t15 = t13 + t14
+0 : write t15
+0 : HALT
+== execution result (translated) ==
+Error: int_of_string
+== optimized target program ==
+0 : x = 0
+0 : read x
+0 : t2 = x == 1
+0 : t5 = x == 2
+0 : t6 = t2 || t5
+0 : if t6 goto 1
+0 : goto 2
+1 : write x
+0 : goto 3
+2 : t10 = x + 1
+0 : write t10
+0 : goto 3
+3 : a = 0
+0 : b = 0
+0 : a = 1
+0 : b = 4
+0 : t13 = a
+0 : t14 = b
+0 : t15 = t13 + t14
+0 : write t15
+0 : HALT
+== execution result (optimized) ==
+Error: int_of_string
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+Running test for file: test/t_int_r.s
+== source program ==
+{
+ int x;
+ int a;
+ x = 5;
+ a = 1;
+ x = a;
+ if x==1 print x;else print x+1;
+}
+== execution result (source) ==
+1
+== translated target program ==
+0 : x = 0
+0 : a = 0
+0 : t0 = 5
+0 : x = t0
+0 : t1 = 1
+0 : a = t1
+0 : t2 = a
+0 : x = t2
+0 : t3 = x
+0 : t4 = 1
+0 : t5 = t3 == t4
+0 : if t5 goto 1
+0 : goto 2
+1 : SKIP
+0 : t6 = x
+0 : write t6
+0 : goto 3
+2 : SKIP
+0 : t7 = x
+0 : t8 = 1
+0 : t9 = t7 + t8
+0 : write t9
+0 : goto 3
+3 : SKIP
+0 : HALT
+== execution result (translated) ==
+1
+#instructions executed : 17
+== optimized target program ==
+0 : x = 0
+0 : a = 0
+0 : x = 5
+0 : a = 1
+0 : x = a
+0 : t5 = x == 1
+0 : if t5 goto 1
+0 : goto 2
+1 : write x
+0 : goto 3
+2 : t9 = x + 1
+0 : write t9
+0 : goto 3
+3 : HALT
+== execution result (optimized) ==
+1
+#instructions executed : 9
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+Running test for file: test/t_t.s
+== source program ==
+{
+ int t;
+ int x;
+ int aa;
+ int y;
+ y = 5;
+ t = aa;
+ aa = 1;
+ x = t;
+ y = t;
+ t = x;
+ print t;
+ print x;
+ print aa;
+ print y;
+}
+== execution result (source) ==
+0
+0
+1
+0
+== translated target program ==
+0 : t = 0
+0 : x = 0
+0 : aa = 0
+0 : y = 0
+0 : t0 = 5
+0 : y = t0
+0 : t1 = aa
+0 : t = t1
+0 : t2 = 1
+0 : aa = t2
+0 : t3 = t
+0 : x = t3
+0 : t4 = t
+0 : y = t4
+0 : t5 = x
+0 : t = t5
+0 : t6 = t
+0 : write t6
+0 : t7 = x
+0 : write t7
+0 : t8 = aa
+0 : write t8
+0 : t9 = y
+0 : write t9
+0 : HALT
+== execution result (translated) ==
+0
+0
+1
+0
+#instructions executed : 24
+== optimized target program ==
+0 : t = 0
+0 : x = 0
+0 : aa = 0
+0 : y = 0
+0 : y = 5
+0 : t = aa
+0 : aa = 1
+0 : x = t
+0 : y = t
+0 : t = x
+0 : write t
+0 : write x
+0 : write aa
+0 : write y
+0 : HALT
+== execution result (optimized) ==
+0
+0
+1
+0
+#instructions executed : 14
+--------------------------------------------------------------------------------------------------------------------------------------------------------
